@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">ArithGo</string>
+    <string name="api_key">AIzaSyA0g3_ccDcVbGmUZnRQx8PSNe768UCLoZ4</string>
+    <string name="my_points">Mis puntos</string>
 </resources>
