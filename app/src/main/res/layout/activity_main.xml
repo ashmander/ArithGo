@@ -2,9 +2,101 @@
 <RelativeLayout android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:android="http://schemas.android.com/apk/res/android" >
-    <fragment
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/map"
-        android:name="com.google.android.gms.maps.SupportMapFragment" />
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_centerVertical="true">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="60sp"
+            android:text="ArithGo"
+            android:textAlignment="center"
+            android:layout_marginBottom="15dp"/>
+
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lapicero"
+            android:textSize="30sp"
+            android:enabled="false"
+            android:id="@+id/lapicero_cb"
+            android:layout_marginLeft="40dp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Libreta"
+            android:textSize="30sp"
+            android:enabled="false"
+            android:id="@+id/libreta_cb"
+            android:layout_marginLeft="40dp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cuaderno"
+            android:textSize="30sp"
+            android:enabled="false"
+            android:id="@+id/cuaderno_cb"
+            android:layout_marginLeft="40dp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Camiseta"
+            android:textSize="30sp"
+            android:enabled="false"
+            android:id="@+id/camiseta_cb"
+            android:layout_marginLeft="40dp"/>
+        <CheckBox
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Saco"
+            android:textSize="30sp"
+            android:enabled="false"
+            android:id="@+id/saco_cb"
+            android:layout_marginLeft="40dp"/>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/inicar_btn"
+            android:text="Iniciar"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="15dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/info_btn"
+            android:text="Información"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="15dp"/>
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/exit_app"
+            android:text="Salir"
+            android:layout_marginLeft="130dp"
+            android:layout_marginTop="15dp"/>
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="25dp"
+        android:id="@+id/points_main_tv"
+        android:textAlignment="center"/>
+
+
+    <ProgressBar
+        android:id="@+id/points_progress"
+        style="@android:style/Widget.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:max="100"
+        android:progress="0"
+        android:progressTint="#102DF7" />
 </RelativeLayout>

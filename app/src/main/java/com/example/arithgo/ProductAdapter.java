@@ -19,10 +19,12 @@ import java.util.ArrayList;
 public class ProductAdapter extends BaseAdapter {
 
     private ArrayList<Product> products;
+    private CanjeoActivity canjeoActivity;
 
-    public ProductAdapter() {
+    public ProductAdapter(CanjeoActivity cj) {
         products = new ArrayList<>();
         addProducts();
+        canjeoActivity = cj;
     }
 
     @Override
@@ -48,16 +50,16 @@ public class ProductAdapter extends BaseAdapter {
         productTv.setText(products.get(position).getName());
         TextView pointsProductTv = view.findViewById(R.id.points_tv);
         pointsProductTv.setText(products.get(position).getValue()+" puntos");
-        final Button canjeoBtn = view.findViewById(R.id.canjeo_btn);
-        final int points = CRUDPoints.getPoints();
+        Button canjeoBtn = view.findViewById(R.id.canjeo_btn);
+
         canjeoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                int points = CRUDPoints.getPoints();
                 if(points>=products.get(position).getValue()) {
-                    canjeoBtn.setText("Canjeado");
-                    canjeoBtn.setEnabled(false);
+                    int p = points - products.get(position).getValue();
                     CRUDPoints.updatePoints(products.get(position).getValue());
-                    notifyDataSetChanged();
+                    canjeoActivity.refreshInformation();
                 } else {
                     Toast morePoints = Toast.makeText(ArithGoApp.getContext(), "Debes tener mas puntos para poder canjear", Toast.LENGTH_LONG);
                     morePoints.show();
@@ -67,12 +69,19 @@ public class ProductAdapter extends BaseAdapter {
         return view;
     }
 
+
+
     public void addProducts(){
         Product p1 = new Product("Lapicero Icesi",20);
         Product p2 = new Product("Cuaderno",30);
         Product p3 = new Product("Libreta Icesi",40);
         Product p4 = new Product("Camiseta Icesi",80);
         Product p5 = new Product("Saco Icesi",100);
+        products.add(p1);
+        products.add(p2);
+        products.add(p3);
+        products.add(p4);
+        products.add(p5);
     }
 
 }

@@ -1,5 +1,6 @@
 package com.example.arithgo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,7 @@ public class Challenge extends AppCompatActivity {
     private TextView operandoBTv;
     private TextView operadorTv;
     private EditText resultEt;
-    private Button verifyBtn;
+    private Button verifyBtn, exit;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,13 +44,28 @@ public class Challenge extends AppCompatActivity {
             public void onClick(View view) {
                 if(resultEt.getText().toString().equals("")) {
                     Toast answare = Toast.makeText(ArithGoApp.getContext(),"Responde la pregunta",Toast.LENGTH_SHORT);
+                    answare.show();
                 } else if(resultEt.getText().toString().equals(""+result)){
                     CRUDPoints.updatePoints();
-                    verifyBtn.setEnabled(false);
+                    Toast answare = Toast.makeText(ArithGoApp.getContext(),"Ganaste 1 punto",Toast.LENGTH_LONG);
+                    answare.show();
+                    Intent intent = new Intent(getApplicationContext(),Mapa.class);
+                    startActivity(intent);
                 } else {
                     CRUDPoints.substractPoint();
-                    verifyBtn.setEnabled(false);
+                    Toast answare = Toast.makeText(ArithGoApp.getContext(),"Perdiste 1 punto",Toast.LENGTH_LONG);
+                    answare.show();
+                    verifyBtn.setText("v");
+                    Intent intent = new Intent(getApplicationContext(),Mapa.class);
+                    startActivity(intent);
                 }
+            }
+        });
+        exit = findViewById(R.id.exit_challenge_btn);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Challenge.super.onBackPressed();
             }
         });
     }
@@ -93,5 +109,10 @@ public class Challenge extends AppCompatActivity {
                 break;
         }
         return result;
+    }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
     }
 }

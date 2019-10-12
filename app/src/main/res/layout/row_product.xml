@@ -11,8 +11,8 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="40sp"
-            android:text="Lapicero"
+            android:textSize="30sp"
+            android:text="Camiseta Icesi"
             android:paddingLeft="20dp"
             android:paddingTop="16dp"
             android:id="@+id/row_product_tv"/>
@@ -30,7 +30,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Canjear"
-        android:textSize="30sp"
+        android:textSize="15sp"
         android:layout_alignParentRight="true"
         android:layout_marginRight="25dp"
         android:layout_marginTop="30dp"

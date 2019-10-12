@@ -1,104 +1,89 @@
 package com.example.arithgo;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.fragment.app.FragmentActivity;
 
-import android.Manifest;
-import android.content.pm.PackageManager;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.example.arithgo.model.data.CRUDPoints;
-import com.google.android.gms.maps.CameraUpdateFactory;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.google.android.gms.maps.model.MarkerOptions;
-import com.google.android.gms.maps.model.Polygon;
-import com.google.android.gms.maps.model.PolygonOptions;
 
-public class MainActivity extends FragmentActivity implements OnMapReadyCallback, LocationListener {
+public class MainActivity extends AppCompatActivity {
 
-    private GoogleMap map;
-    private Marker miUbicacion;
-    private Polygon bibliotecaIcesi;
-    private Polygon auditoriosIcesi;
-    private Polygon edificioDIcesi;
+    private Button iniciar, info, exit;
+    private CheckBox lapicero, cuaderno, libreta, camiseta, saco;
+    private ProgressBar pointsProgress;
+    private TextView mainPoints;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
-        ActivityCompat.requestPermissions(this, new String[]{
-                Manifest.permission.ACCESS_COARSE_LOCATION,
-                Manifest.permission.ACCESS_FINE_LOCATION
-        },11);
-        CRUDPoints.insertPoin();
-    }
-
-    @Override
-    public void onMapReady(GoogleMap googleMap) {
-        map = googleMap;
-        bibliotecaIcesi = map.addPolygon(new PolygonOptions().add(
-                new LatLng(3.341935, -76.530103),
-                new LatLng(3.341921, -76.529808),
-                new LatLng(3.341640, -76.529819),
-                new LatLng(3.341654, -76.530084)
-        ));
-        auditoriosIcesi = map.addPolygon(new PolygonOptions().add(
-                new LatLng(3.342334, -76.529618),
-                new LatLng(3.342701, -76.529954),
-                new LatLng(3.342848, -76.529724),
-                new LatLng(3.342606, -76.529443)
-        ));
-        edificioDIcesi = map.addPolygon(new PolygonOptions().add(
-                new LatLng(3.341001, -76.530411),
-                new LatLng(3.340803, -76.530414),
-                new LatLng(3.340795, -76.530009),
-                new LatLng(3.340987, -76.529968)
-        ));
-        LatLng icesi = new LatLng(3.341552, -76.529784);
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(icesi, 15));
-        miUbicacion = map.addMarker(new MarkerOptions().position(icesi).icon(BitmapDescriptorFactory.fromResource(R.drawable.ubication)).title("Mi ubicacion"));
-        LocationManager manager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
-            manager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0,this);
-        } else {
-            ActivityCompat.requestPermissions(this, new String[]{
-                    Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.ACCESS_FINE_LOCATION
-            },11);
+        CRUDPoints.insertPoint();
+        iniciar = findViewById(R.id.inicar_btn);
+        iniciar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),Mapa.class);
+                startActivity(i);
+            }
+        });
+        info = findViewById(R.id.info_btn);
+        info.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(getApplicationContext(),Info.class);
+                startActivity(i);
+            }
+        });
+        exit = findViewById(R.id.exit_app);
+        exit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+        lapicero = findViewById(R.id.lapicero_cb);
+        cuaderno = findViewById(R.id.cuaderno_cb);
+        libreta = findViewById(R.id.libreta_cb);
+        camiseta = findViewById(R.id.camiseta_cb);
+        saco = findViewById(R.id.saco_cb);
+        pointsProgress = findViewById(R.id.points_progress);
+        mainPoints = findViewById(R.id.points_main_tv);
+        int points = CRUDPoints.getPoints();
+        pointsProgress.setProgress(points);
+        mainPoints.setText(""+points+" puntos");
+        if(points>=100) {
+            lapicero.setChecked(true);
+            cuaderno.setChecked(true);
+            libreta.setChecked(true);
+            camiseta.setChecked(true);
+            saco.setChecked(true);
+        } else if(points>=80) {
+            lapicero.setChecked(true);
+            cuaderno.setChecked(true);
+            libreta.setChecked(true);
+            camiseta.setChecked(true);
+        } else if(points>=40) {
+            lapicero.setChecked(true);
+            cuaderno.setChecked(true);
+            libreta.setChecked(true);
+        } else if(points>=30) {
+            lapicero.setChecked(true);
+            cuaderno.setChecked(true);
+        } else if(points>=20) {
+            lapicero.setChecked(true);
         }
     }
 
     @Override
-    public void onLocationChanged(Location location) {
-        LatLng pos = new LatLng(location.getLatitude(), location.getLongitude());
-        miUbicacion.setPosition(pos);
-
-        map.animateCamera(CameraUpdateFactory.newLatLngZoom(pos, 18));
-    }
-
-    @Override
-    public void onStatusChanged(String s, int i, Bundle bundle) {
+    public void onBackPressed() {
 
     }
 
-    @Override
-    public void onProviderEnabled(String s) {
 
-    }
-
-    @Override
-    public void onProviderDisabled(String s) {
-
-    }
 }
